@@ -1,6 +1,6 @@
 // ========== 请替换成你的Sora2 API信息 ==========
 const API_KEY = "sk-WgcqHcfffonLT8rIarHPYt86hLXEsnhkjShi9t262X4F4Qjs"; // 替换成 sk-xxx 格式的密钥
-const BASE_URL = "https:///v1/video/create/v1"; // 替换成商家提供的接口地址
+const BASE_URL = "https://yunwu.ai/v1"; // 替换成商家提供的接口地址
 // ==============================================
 
 // DOM元素获取
