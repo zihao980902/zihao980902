@@ -1,0 +1,167 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>上岩新媒体AI视频中心</title>
+    <link rel="stylesheet" href="style.css">
+    <!-- 引入字体图标 -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+</head>
+<body>
+    <!-- 顶部导航 -->
+    <nav class="navbar">
+        <div class="nav-container">
+            <div class="logo">
+                <i class="fas fa-video"></i>
+                <span>上岩新媒体AI视频中心</span>
+            </div>
+            <div class="nav-desc">智能生成高质量视频，赋能新媒体创作</div>
+        </div>
+    </nav>
+
+    <!-- 主内容区 -->
+    <div class="main-container">
+        <!-- 左侧输入区 -->
+        <div class="input-section">
+            <h2 class="section-title">
+                <i class="fas fa-pen-fancy"></i> 视频创作指令
+            </h2>
+            
+            <!-- 视频描述输入框（核心，清晰可见） -->
+            <div class="form-group">
+                <label for="prompt">
+                    <i class="fas fa-comment-dots"></i> 视频描述 <span class="required">*</span>
+                </label>
+                <textarea 
+                    id="prompt" 
+                    placeholder="例如：一只柯基在海边奔跑，夕阳西下，电影质感，4K分辨率，16:9横屏"
+                    spellcheck="false"
+                    autocomplete="off"
+                ></textarea>
+                <p class="input-hint">请详细描述画面内容、风格、分辨率、比例等，描述越详细，生成效果越好</p>
+            </div>
+
+            <!-- 视频参数设置 -->
+            <div class="params-grid">
+                <div class="form-group">
+                    <label for="duration">
+                        <i class="fas fa-clock"></i> 视频时长（秒）
+                    </label>
+                    <input 
+                        type="number" 
+                        id="duration" 
+                        value="10" 
+                        min="5" 
+                        max="30"
+                        step="1"
+                    >
+                    <p class="input-hint">支持5-30秒</p>
+                </div>
+
+                <div class="form-group">
+                    <label for="resolution">
+                        <i class="fas fa-desktop"></i> 分辨率
+                    </label>
+                    <select id="resolution">
+                        <option value="720p">720p（标清）</option>
+                        <option value="1080p" selected>1080p（高清）</option>
+                        <option value="4K">4K（超清）</option>
+                    </select>
+                </div>
+
+                <div class="form-group">
+                    <label for="aspect_ratio">
+                        <i class="fas fa-expand-arrows-alt"></i> 画面比例
+                    </label>
+                    <select id="aspect_ratio">
+                        <option value="16:9" selected>16:9（横屏）</option>
+                        <option value="9:16">9:16（竖屏/短视频）</option>
+                        <option value="1:1">1:1（正方形）</option>
+                    </select>
+                </div>
+
+                <div class="form-group">
+                    <label for="style">
+                        <i class="fas fa-palette"></i> 视频风格
+                    </label>
+                    <select id="style">
+                        <option value="cinematic" selected>电影感</option>
+                        <option value="cartoon">卡通</option>
+                        <option value="realistic">写实</option>
+                        <option value="cyberpunk">赛博朋克</option>
+                        <option value="warm">温暖治愈</option>
+                    </select>
+                </div>
+            </div>
+
+            <!-- 生成按钮 -->
+            <button id="generateBtn" class="generate-btn" onclick="generateVideo()">
+                <i class="fas fa-rocket"></i> 生成AI视频
+            </button>
+        </div>
+
+        <!-- 右侧结果区 -->
+        <div class="result-section">
+            <h2 class="section-title">
+                <i class="fas fa-play-circle"></i> 生成结果
+            </h2>
+            
+            <!-- 进度显示区 -->
+            <div id="progressContainer" class="progress-container hidden">
+                <div class="progress-header">
+                    <span>视频生成中</span>
+                    <span id="progressPercent">0%</span>
+                </div>
+                <div class="progress-bar">
+                    <div id="progressFill" class="progress-fill"></div>
+                </div>
+                <p id="progressText">初始化请求...</p>
+            </div>
+
+            <!-- 结果显示区 -->
+            <div id="resultContainer" class="result-container hidden">
+                <div id="successResult" class="success-result hidden">
+                    <div class="result-icon success-icon">
+                        <i class="fas fa-check-circle"></i>
+                    </div>
+                    <h3>生成成功！</h3>
+                    <p class="result-desc">点击下方链接下载你的AI视频</p>
+                    <a id="videoLink" href="#" target="_blank" class="video-link">
+                        <i class="fas fa-download"></i> 下载视频
+                    </a>
+                </div>
+
+                <div id="errorResult" class="error-result hidden">
+                    <div class="result-icon error-icon">
+                        <i class="fas fa-exclamation-circle"></i>
+                    </div>
+                    <h3>生成失败</h3>
+                    <p id="errorText" class="result-desc">请检查参数后重试</p>
+                    <button class="retry-btn" onclick="resetResult()">
+                        <i class="fas fa-refresh"></i> 重新生成
+                    </button>
+                </div>
+            </div>
+
+            <!-- 空状态 -->
+            <div id="emptyResult" class="empty-result">
+                <div class="empty-icon">
+                    <i class="fas fa-file-video"></i>
+                </div>
+                <h3>暂无生成结果</h3>
+                <p>填写左侧创作指令，点击生成按钮开始创作</p>
+            </div>
+        </div>
+    </div>
+
+    <!-- 页脚 -->
+    <footer class="footer">
+        <div class="footer-container">
+            <p>© 2026 上岩新媒体AI视频中心 - 赋能每一位创作者</p>
+        </div>
+    </footer>
+
+    <script src="script.js"></script>
+</body>
+</html>
