@@ -251,7 +251,74 @@ textarea {
     text-align: center;
     padding: 20px 0;
 }
+// 参考图上传处理
+uploadArea.addEventListener('click', () => {
+    referenceImage.click();
+});
 
+// 拖拽上传（可选，增强体验）
+uploadArea.addEventListener('dragover', (e) => {
+    e.preventDefault();
+    uploadArea.style.borderColor = var(--primary-color);
+    uploadArea.style.backgroundColor = 'rgba(22, 93, 255, 0.1)';
+});
+
+uploadArea.addEventListener('dragleave', () => {
+    uploadArea.style.borderColor = var(--border-color);
+    uploadArea.style.backgroundColor = var(--bg-secondary);
+});
+
+uploadArea.addEventListener('drop', (e) => {
+    e.preventDefault();
+    uploadArea.style.borderColor = var(--border-color);
+    uploadArea.style.backgroundColor = var(--bg-secondary);
+    
+    if (e.dataTransfer.files.length > 0) {
+        handleImageFile(e.dataTransfer.files[0]);
+    }
+});
+
+// 选择文件后处理
+referenceImage.addEventListener('change', () => {
+    if (referenceImage.files.length > 0) {
+        handleImageFile(referenceImage.files[0]);
+    }
+});
+
+// 处理图片文件
+function handleImageFile(file) {
+    // 验证文件类型
+    if (!file.type.startsWith('image/')) {
+        showResult('error', { message: '❌ 请上传图片文件（JPG/PNG）！' });
+        return;
+    }
+    
+    // 验证文件大小（10MB以内）
+    if (file.size > 10 * 1024 * 1024) {
+        showResult('error', { message: '❌ 图片大小不能超过10MB！' });
+        return;
+    }
+    
+    // 存储文件
+    imageFile = file;
+    
+    // 显示预览
+    const reader = new FileReader();
+    reader.onload = (e) => {
+        previewImage.src = e.target.result;
+        uploadArea.classList.add('hidden');
+        previewContainer.classList.remove('hidden');
+    };
+    reader.readAsDataURL(file);
+}
+
+// 移除图片
+function removeImage() {
+    imageFile = null;
+    referenceImage.value = '';
+    previewContainer.classList.add('hidden');
+    uploadArea.classList.remove('hidden');
+}
 .result-icon {
     font-size: 48px;
     margin-bottom: 16px;
