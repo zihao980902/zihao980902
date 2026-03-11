@@ -352,3 +352,79 @@ textarea {
         text-align: center;
     }
 }
+/* 参考图上传区域样式 */
+.upload-container {
+    width: 100%;
+    border-radius: var(--radius-md);
+    overflow: hidden;
+}
+
+.upload-area {
+    width: 100%;
+    height: 180px;
+    border: 2px dashed var(--border-color);
+    border-radius: var(--radius-md);
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    gap: 12px;
+    background-color: var(--bg-secondary);
+    cursor: pointer;
+    transition: var(--transition);
+}
+
+.upload-area:hover {
+    border-color: var(--primary-light);
+    background-color: rgba(22, 93, 255, 0.05);
+}
+
+.upload-icon {
+    font-size: 40px;
+    color: var(--text-placeholder);
+}
+
+.upload-text {
+    font-size: 14px;
+    color: var(--text-secondary);
+    font-weight: 500;
+}
+
+.upload-hint {
+    font-size: 12px;
+    color: var(--text-placeholder);
+}
+
+/* 图片预览样式 */
+.preview-container {
+    width: 100%;
+    position: relative;
+}
+
+.preview-image {
+    width: 100%;
+    height: auto;
+    border-radius: var(--radius-md);
+    object-fit: cover;
+}
+
+.remove-btn {
+    position: absolute;
+    top: 10px;
+    right: 10px;
+    background: rgba(245, 63, 63, 0.9);
+    color: white;
+    border: none;
+    border-radius: 50%;
+    width: 32px;
+    height: 32px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    cursor: pointer;
+    transition: var(--transition);
+}
+
+.remove-btn:hover {
+    background: var(--error-color);
+}
