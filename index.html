@@ -30,6 +30,28 @@
             
             <!-- 视频描述输入框（核心，清晰可见） -->
             <div class="form-group">
+                <!-- 新增：参考图上传区域 -->
+<div class="form-group">
+    <label for="referenceImage">
+        <i class="fas fa-image"></i> 参考图（可选）
+    </label>
+    <div class="upload-container">
+        <div class="upload-area" id="uploadArea">
+            <input type="file" id="referenceImage" accept="image/*" hidden>
+            <div class="upload-icon">
+                <i class="fas fa-cloud-upload-alt"></i>
+            </div>
+            <p class="upload-text">点击或拖拽图片到此处上传</p>
+            <p class="upload-hint">支持JPG/PNG格式，大小不超过10MB</p>
+        </div>
+        <div id="previewContainer" class="preview-container hidden">
+            <img id="previewImage" src="" alt="参考图预览" class="preview-image">
+            <button class="remove-btn" onclick="removeImage()">
+                <i class="fas fa-times"></i> 移除
+            </button>
+        </div>
+    </div>
+</div>
                 <label for="prompt">
                     <i class="fas fa-comment-dots"></i> 视频描述 <span class="required">*</span>
                 </label>
